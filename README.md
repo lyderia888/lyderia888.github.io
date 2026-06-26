@@ -1,1 +1,397 @@
-# lyderia888.github.io
+[lyderia.html](https://github.com/user-attachments/files/29363119/lyderia.html)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lyderia</title>
+<style>
+  :root{
+    --black: #050505;
+    --bone: #ece7df;
+    --bone-dim: #8b867d;
+    --violet: #6b4fa0;
+    --crimson: #9a3247;
+    --teal: #2f6e63;
+    --line: rgba(236,231,223,0.14);
+  }
+
+  @font-face {
+    font-family: 'system-serif';
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html,body{
+    background: var(--black);
+    color: var(--bone);
+    font-family: 'Georgia', 'Iowan Old Style', serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body{
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* ambient animated colour wash */
+  .wash{
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .wash::before, .wash::after{
+    content: '';
+    position: absolute;
+    width: 70vw;
+    height: 70vw;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.16;
+    mix-blend-mode: screen;
+  }
+
+  .wash::before{
+    background: radial-gradient(circle, var(--violet), transparent 70%);
+    top: -20%;
+    left: -10%;
+    animation: drift1 34s ease-in-out infinite;
+  }
+
+  .wash::after{
+    background: radial-gradient(circle, var(--crimson), transparent 70%);
+    bottom: -25%;
+    right: -15%;
+    animation: drift2 40s ease-in-out infinite;
+  }
+
+  .wash-extra{
+    position: absolute;
+    width: 50vw;
+    height: 50vw;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--teal), transparent 70%);
+    filter: blur(100px);
+    opacity: 0.12;
+    mix-blend-mode: screen;
+    top: 40%;
+    left: 50%;
+    animation: drift3 46s ease-in-out infinite;
+  }
+
+  @keyframes drift1{
+    0%,100%{ transform: translate(0,0) scale(1); }
+    50%{ transform: translate(12vw, 10vh) scale(1.15); }
+  }
+  @keyframes drift2{
+    0%,100%{ transform: translate(0,0) scale(1); }
+    50%{ transform: translate(-10vw, -8vh) scale(1.1); }
+  }
+  @keyframes drift3{
+    0%,100%{ transform: translate(-50%,-40%) scale(1); }
+    50%{ transform: translate(-45%,-50%) scale(1.2); }
+  }
+
+  /* grain texture for atmosphere */
+  .grain{
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .view{
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: none;
+  }
+  .view.active{ display: block; }
+
+  /* ----- LANDING ----- */
+  #landing{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .portal{
+    position: relative;
+  }
+
+  .enter-btn{
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--bone);
+    font-family: inherit;
+    font-size: clamp(0.85rem, 1.4vw, 1.1rem);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    padding: 1.3em 2.6em;
+    cursor: pointer;
+    position: relative;
+    transition: letter-spacing 0.6s ease, border-color 0.6s ease, color 0.6s ease;
+  }
+
+  .enter-btn::before{
+    content: '';
+    position: absolute;
+    inset: -18px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: pulse-ring 5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-ring{
+    0%,100%{ transform: scale(1); opacity: 0.35; }
+    50%{ transform: scale(1.08); opacity: 0.6; }
+  }
+
+  .enter-btn:hover{
+    letter-spacing: 0.5em;
+    border-color: var(--bone);
+  }
+
+  .enter-btn:focus-visible{
+    outline: 1px solid var(--bone);
+    outline-offset: 6px;
+  }
+
+  .whisper{
+    margin-top: 2.6em;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--bone-dim);
+    opacity: 0;
+    animation: fade-in 2s ease forwards 1.2s;
+  }
+
+  @keyframes fade-in{ to{ opacity: 0.7; } }
+
+  /* ----- ETHOS PAGE ----- */
+  #ethos{
+    padding: 8vh 7vw 14vh;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .back{
+    background: none;
+    border: none;
+    color: var(--bone-dim);
+    font-family: inherit;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-bottom: 6vh;
+    padding: 0;
+  }
+  .back:hover{ color: var(--bone); }
+
+  .mark{
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--bone-dim);
+    margin-bottom: 1.4em;
+  }
+
+  h1{
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    margin-bottom: 1.4em;
+    line-height: 1.15;
+  }
+
+  .ethos-text p{
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--bone);
+    opacity: 0.88;
+    margin-bottom: 1.4em;
+    max-width: 620px;
+  }
+
+  .divider{
+    width: 100%;
+    height: 1px;
+    background: var(--line);
+    margin: 5em 0 3em;
+  }
+
+  .section-label{
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--bone-dim);
+    margin-bottom: 2em;
+  }
+
+  .events{
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .event{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 1.4em 0;
+    border-top: 1px solid var(--line);
+    gap: 2em;
+  }
+  .event:last-child{ border-bottom: 1px solid var(--line); }
+
+  .event-date{
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--bone-dim);
+    white-space: nowrap;
+    text-transform: uppercase;
+    min-width: 110px;
+  }
+
+  .event-name{
+    font-size: 1.1rem;
+    flex: 1;
+  }
+
+  .event-place{
+    font-size: 0.8rem;
+    color: var(--bone-dim);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .socials{
+    display: flex;
+    gap: 2.4em;
+    flex-wrap: wrap;
+  }
+
+  .socials a{
+    color: var(--bone);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.4s ease, color 0.4s ease;
+    padding-bottom: 0.3em;
+  }
+
+  .socials a:hover{
+    border-color: var(--bone);
+    color: var(--violet);
+  }
+
+  footer{
+    margin-top: 7em;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--bone-dim);
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 600px){
+    .event{ flex-direction: column; align-items: flex-start; gap: 0.3em; }
+    .event-place{ text-align: left; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .wash::before, .wash::after, .wash-extra, .enter-btn::before{
+      animation: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="wash"><div class="wash-extra"></div></div>
+  <div class="grain"></div>
+
+  <main id="landing" class="view active">
+    <div class="portal">
+      <button class="enter-btn" id="enterBtn">Enter Lyderia</button>
+      <div class="whisper">est. in the dark</div>
+    </div>
+  </main>
+
+  <main id="ethos" class="view">
+    <button class="back" id="backBtn">← leave</button>
+
+    <div class="mark">Lyderia</div>
+    <h1>We don't throw parties.<br>We open temporary worlds.</h1>
+
+    <div class="ethos-text">
+      <p>Lyderia exists for the hours between midnight and whatever comes after it. We build rooms where the outside stops mattering — where sound, light, and strangers rearrange into something closer to ritual than entertainment.</p>
+      <p>No headliner egos. No bottle service. No phones held above the crowd. What you find inside is built by the people who show up, and it disappears the moment the last set ends — which is exactly the point.</p>
+      <p>We choose spaces that already have a pulse: warehouses, tunnels, rooftops, places with history in the walls. The music is selected to move a room together, not to perform for it.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-label">Upcoming</div>
+    <div class="events">
+      <div class="event">
+        <div class="event-date">19 Jul</div>
+        <div class="event-name">Hollow Hour</div>
+        <div class="event-place">Undisclosed — Brisbane</div>
+      </div>
+      <div class="event">
+        <div class="event-date">02 Aug</div>
+        <div class="event-name">Salt &amp; Static</div>
+        <div class="event-place">Old Cannery, Fortitude Valley</div>
+      </div>
+      <div class="event">
+        <div class="event-date">23 Aug</div>
+        <div class="event-name">Lyderia: Equinox</div>
+        <div class="event-place">Location revealed 24hrs prior</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-label">Find us</div>
+    <div class="socials">
+      <a href="#" target="_blank" rel="noopener">Instagram</a>
+      <a href="#" target="_blank" rel="noopener">TikTok</a>
+      <a href="#" target="_blank" rel="noopener">SoundCloud</a>
+      <a href="#" target="_blank" rel="noopener">RA</a>
+    </div>
+
+    <footer>Lyderia &nbsp;·&nbsp; access is earned, not advertised</footer>
+  </main>
+
+<script>
+  const enterBtn = document.getElementById('enterBtn');
+  const backBtn = document.getElementById('backBtn');
+  const landing = document.getElementById('landing');
+  const ethos = document.getElementById('ethos');
+
+  enterBtn.addEventListener('click', () => {
+    landing.classList.remove('active');
+    ethos.classList.add('active');
+    window.scrollTo(0,0);
+  });
+
+  backBtn.addEventListener('click', () => {
+    ethos.classList.remove('active');
+    landing.classList.add('active');
+  });
+</script>
+
+</body>
+</html>
