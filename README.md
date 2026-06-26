@@ -1,4 +1,3 @@
-[lyderia.html](https://github.com/user-attachments/files/29363119/lyderia.html)
 <!DOCTYPE html>
 <html lang="en">
 <head>
