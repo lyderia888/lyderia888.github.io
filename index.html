@@ -109,9 +109,7 @@
     position: relative;
     z-index: 2;
     min-height: 100vh;
-    display: none;
   }
-  .view.active{ display: block; }
 
   /* ----- LANDING ----- */
   #landing{
@@ -180,20 +178,6 @@
     max-width: 760px;
     margin: 0 auto;
   }
-
-  .back{
-    background: none;
-    border: none;
-    color: var(--bone-dim);
-    font-family: inherit;
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    cursor: pointer;
-    margin-bottom: 6vh;
-    padding: 0;
-  }
-  .back:hover{ color: var(--bone); }
 
   .mark{
     font-size: 0.7rem;
@@ -319,7 +303,7 @@
   <div class="wash"><div class="wash-extra"></div></div>
   <div class="grain"></div>
 
-  <main id="landing" class="view active">
+  <main id="landing" class="view">
     <div class="portal">
       <div class="rainbow-band"></div>
       <button class="enter-btn" id="enterBtn">Enter Lyderia</button>
@@ -327,7 +311,6 @@
   </main>
 
   <main id="ethos" class="view">
-    <button class="back" id="backBtn">← leave</button>
 
     <div class="mark">Lyderia</div>
     <h1>We don't throw parties.<br>We open temporary worlds.</h1>
@@ -372,19 +355,10 @@
 
 <script>
   const enterBtn = document.getElementById('enterBtn');
-  const backBtn = document.getElementById('backBtn');
-  const landing = document.getElementById('landing');
   const ethos = document.getElementById('ethos');
 
   enterBtn.addEventListener('click', () => {
-    landing.classList.remove('active');
-    ethos.classList.add('active');
-    window.scrollTo(0,0);
-  });
-
-  backBtn.addEventListener('click', () => {
-    ethos.classList.remove('active');
-    landing.classList.add('active');
+    ethos.scrollIntoView({ behavior: 'smooth' });
   });
 </script>
 
