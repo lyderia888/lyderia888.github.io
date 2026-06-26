@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lyderia — Mid July</title>
+<style>
+  :root{
+    --black: #050505;
+    --bone: #ece7df;
+    --bone-dim: #8b867d;
+    --violet: #6b4fa0;
+    --crimson: #9a3247;
+    --teal: #2f6e63;
+    --line: rgba(236,231,223,0.14);
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html,body{
+    background: var(--black);
+    color: var(--bone);
+    font-family: 'Georgia', 'Iowan Old Style', serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body{
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* ambient animated colour wash */
+  .wash{
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .wash::before, .wash::after{
+    content: '';
+    position: absolute;
+    width: 70vw;
+    height: 70vw;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.16;
+    mix-blend-mode: screen;
+  }
+
+  .wash::before{
+    background: radial-gradient(circle, var(--violet), transparent 70%);
+    top: -20%;
+    left: -10%;
+    animation: drift1 34s ease-in-out infinite;
+  }
+
+  .wash::after{
+    background: radial-gradient(circle, var(--crimson), transparent 70%);
+    bottom: -25%;
+    right: -15%;
+    animation: drift2 40s ease-in-out infinite;
+  }
+
+  .wash-extra{
+    position: absolute;
+    width: 50vw;
+    height: 50vw;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--teal), transparent 70%);
+    filter: blur(100px);
+    opacity: 0.12;
+    mix-blend-mode: screen;
+    top: 40%;
+    left: 50%;
+    animation: drift3 46s ease-in-out infinite;
+  }
+
+  @keyframes drift1{
+    0%,100%{ transform: translate(0,0) scale(1); }
+    50%{ transform: translate(12vw, 10vh) scale(1.15); }
+  }
+  @keyframes drift2{
+    0%,100%{ transform: translate(0,0) scale(1); }
+    50%{ transform: translate(-10vw, -8vh) scale(1.1); }
+  }
+  @keyframes drift3{
+    0%,100%{ transform: translate(-50%,-40%) scale(1); }
+    50%{ transform: translate(-45%,-50%) scale(1.2); }
+  }
+
+  /* grain texture for atmosphere */
+  .grain{
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  main{
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8vh 7vw;
+  }
+
+  .back{
+    position: absolute;
+    top: 5vh;
+    left: 7vw;
+    background: none;
+    border: none;
+    color: var(--bone-dim);
+    font-family: inherit;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.4s ease;
+  }
+  .back:hover{ color: var(--bone); }
+
+  .mark{
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--bone-dim);
+    margin-bottom: 1.6em;
+  }
+
+  .when{
+    font-size: clamp(0.85rem, 1.4vw, 1rem);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--bone-dim);
+    margin-bottom: 1.2em;
+  }
+
+  h1{
+    font-size: clamp(2.4rem, 7vw, 4.5rem);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.8em;
+    line-height: 1.1;
+  }
+
+  .where{
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--bone);
+    opacity: 0.85;
+    letter-spacing: 0.08em;
+    margin-bottom: 2.4em;
+  }
+
+  .note{
+    max-width: 480px;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--bone);
+    opacity: 0.7;
+  }
+</style>
+</head>
+<body>
+
+  <div class="wash"><div class="wash-extra"></div></div>
+  <div class="grain"></div>
+
+  <main>
+    <a class="back" href="index.html">← back</a>
+
+    <div class="mark">Lyderia</div>
+    <div class="when">Mid July</div>
+    <h1>Coming Soon</h1>
+    <div class="where">Undisclosed — Gold Coast</div>
+
+    <p class="note">Details surface when the time is right. Follow our socials to be among the first to know.</p>
+  </main>
+
+</body>
+</html>
